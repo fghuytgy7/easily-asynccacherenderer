@@ -1,11 +1,14 @@
-function mergeTwoLists(l1, l2) {
-  if (!l1) return l2;
-  if (!l2) return l1;
-  if (l1.val < l2.val) {
-    l1.next = mergeTwoLists(l1.next, l2);
-    return l1;
-  } else {
-    l2.next = mergeTwoLists(l1, l2.next);
-    return l2;
+function findRedundantConnection(edges) {
+  const parent = new Array(edges.length + 1).fill(-1);
+  for (const edge of edges) {
+    const u = find(parent, edge[0]);
+    const v = find(parent, edge[1]);
+    if (u === v) return edge;
+    parent[u] = v;
   }
+  return [];
+}
+function find(parent, i) {
+  if (parent[i] === -1) return i;
+  return find(parent, parent[i]);
 }
